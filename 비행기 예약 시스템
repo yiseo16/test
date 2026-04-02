@@ -367,7 +367,8 @@ int main() {
 				if (H == 1) {
 					if (arr1[M - 1][N - 1] == 0) {
 						cout << "현재 좌석이 틀렸습니다. 다시 입력해주세요." << endl;
-						cout << "현재 좌석( H구역, N열, M번째 ) : ";						cin >> H >> N >> M;
+						cout << "현재 좌석( H구역, N열, M번째 ) : ";						
+						cin >> H >> N >> M;
 					}
 					if (arr1[M - 1][N - 1] == 1) {
 						if (H_change == 1) {
@@ -388,7 +389,8 @@ int main() {
 				if (H == 2) {
 					if (arr2[M - 1][N - 1] == 0) {
 						cout << "현재 좌석이 틀렸습니다. 다시 입력해주세요." << endl;
-						cout << "현재 좌석( H구역, N열, M번째 ) : ";						cin >> H >> N >> M;
+						cout << "현재 좌석( H구역, N열, M번째 ) : ";						
+						cin >> H >> N >> M;
 					}
 
 					if (arr2[M - 1][N - 1] == 1) {
