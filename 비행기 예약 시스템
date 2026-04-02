@@ -302,35 +302,28 @@ int main() {
 				int M;
 				int M_change;
 
-				cout << "현재 좌석( H구역, N열, M번째 ) : ";
-				cin >> H >> N >> M;
-
-				while (H < 1 || H > 3 || N < 1 || N > 6 || M < 1 || M > 4) {
-					cout << "좌석 번호를 다시 입력해주세요" << endl;
+				while (1) {
 					cout << "현재 좌석( H구역, N열, M번째 ) : ";
 					cin >> H >> N >> M;
-				}
 
-				if (H == 1) {
-					while (arr1[M - 1][N - 1] == 0) {
-						cout << "현재 좌석이 틀렸습니다. 다시 입력해주세요." << endl;
-						cout << "현재 좌석( H구역, N열, M번째 ) : ";
-						cin >> H >> N >> M;
+					if (H < 1 || H > 3 || N < 1 || N > 6 || M < 1 || M > 4) {
+						cout << "좌석 번호를 다시 입력해주세요." << endl;
+						continue;
 					}
-				}
-				else if (H == 2) {
-					while (arr2[M - 1][N - 1] == 0) {
-						cout << "현재 좌석이 틀렸습니다. 다시 입력해주세요." << endl;
-						cout << "현재 좌석( H구역, N열, M번째 ) : ";
-						cin >> H >> N >> M;
+
+					if (H == 1 && arr1[M - 1][N - 1] == 1) {
+						break;
 					}
-				}
-				else {
-					while (arr3[M - 1][N - 1] == 0) {
-						cout << "현재 좌석이 틀렸습니다. 다시 입력해주세요." << endl;
-						cout << "현재 좌석( H구역, N열, M번째 ) : ";
-						cin >> H >> N >> M;
+
+					if (H == 2 && arr2[M - 1][N - 1] == 1) {
+						break;
 					}
+
+					if (H == 3 && arr3[M - 1][N - 1] == 1) {
+						break;
+					}
+
+					cout << "현재 좌석이 틀렸습니다. 다시 입력해주세요." << endl;
 				}
 
 				while (1) {
