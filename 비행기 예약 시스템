@@ -34,75 +34,74 @@ int main() {
 		{ 0, 0, 0, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0 }
 	};
-
+	int i, j;
 	while (1) {
 		cout << endl;
 		cout << endl;
 		cout << endl;
 
-		cout << "1 2 3" << "   " << "4 5 6" << "   (1구역)" << endl;
-		cout << "---------------" << endl;
-		int i, j;
-		for (i = 0; i < 4; i++) {
-			for (j = 0; j < 6; j++) {
-				cout << arr1[i][j];
-				if (j < 2) {
-					cout << " ";
-				}
-				if (j == 2) {
-					cout << "   ";
-				}
-				if (j > 2 && j < 5) {
-					cout << " ";
-				}
-				if (j == 5) {
-					cout << endl;
-				}
-			}
-		}
-		cout << "---------------" << endl;
-		cout << "1 2 3" << "   " << "4 5 6" << "   (2구역)" << endl;
-		cout << "---------------" << endl;
-		for (i = 0; i < 4; i++) {
-			for (j = 0; j < 6; j++) {
-				cout << arr2[i][j];
-				if (j < 2) {
-					cout << " ";
-				}
-				if (j == 2) {
-					cout << "   ";
-				}
-				if (j > 2 && j < 5) {
-					cout << " ";
-				}
-				if (j == 5) {
-					cout << endl;
-				}
-			}
-		}
-		cout << "---------------" << endl;
-		cout << "1 2 3" << "   " << "4 5 6" << "   (3구역)" << endl;
-		cout << "---------------" << endl;
-		for (i = 0; i < 4; i++) {
-			for (j = 0; j < 6; j++) {
-				cout << arr3[i][j];
-				if (j < 2) {
-					cout << " ";
-				}
-				if (j == 2) {
-					cout << "   ";
-				}
-				if (j > 2 && j < 5) {
-					cout << " ";
-				}
-				if (j == 5) {
-					cout << endl;
-				}
-			}
-		}
-		cout << "---------------" << endl;
-
 		if (num == 1) {
+			cout << "1 2 3" << "   " << "4 5 6" << "   (1구역)" << endl;
+			cout << "---------------" << endl;
+			for (i = 0; i < 4; i++) {
+				for (j = 0; j < 6; j++) {
+					cout << arr1[i][j];
+					if (j < 2) {
+						cout << " ";
+					}
+					if (j == 2) {
+						cout << "   ";
+					}
+					if (j > 2 && j < 5) {
+						cout << " ";
+					}
+					if (j == 5) {
+						cout << endl;
+					}
+				}
+			}
+			cout << "---------------" << endl;
+			cout << "1 2 3" << "   " << "4 5 6" << "   (2구역)" << endl;
+			cout << "---------------" << endl;
+			for (i = 0; i < 4; i++) {
+				for (j = 0; j < 6; j++) {
+					cout << arr2[i][j];
+					if (j < 2) {
+						cout << " ";
+					}
+					if (j == 2) {
+						cout << "   ";
+					}
+					if (j > 2 && j < 5) {
+						cout << " ";
+					}
+					if (j == 5) {
+						cout << endl;
+					}
+				}
+			}
+			cout << "---------------" << endl;
+			cout << "1 2 3" << "   " << "4 5 6" << "   (3구역)" << endl;
+			cout << "---------------" << endl;
+			for (i = 0; i < 4; i++) {
+				for (j = 0; j < 6; j++) {
+					cout << arr3[i][j];
+					if (j < 2) {
+						cout << " ";
+					}
+					if (j == 2) {
+						cout << "   ";
+					}
+					if (j > 2 && j < 5) {
+						cout << " ";
+					}
+					if (j == 5) {
+						cout << endl;
+					}
+				}
+			}
+			cout << "---------------" << endl;
+
 			cout << "성인 (50000원) : ";
 			cin >> num_adult;
 			cout << "유아 (40000원) : ";
@@ -342,32 +341,32 @@ int main() {
 						cout << "똑같은 좌석입니다. 다른 자리를 선택하세요." << endl;
 						continue;
 					}
-					
+
 					if (H_change < 1 || H_change > 3 || N_change < 1 || N_change > 6 || M_change < 1 || M_change > 4) {
-					cout << "좌석 번호를 다시 입력해주세요" << endl;
-					continue;
+						cout << "좌석 번호를 다시 입력해주세요" << endl;
+						continue;
 					}
 
 					if (H_change == 1 && arr1[M_change - 1][N_change - 1] == 1) {
-					cout << "이미 예약되었습니다. 다른 좌석을 선택하세요" << endl;
-					continue;
+						cout << "이미 예약되었습니다. 다른 좌석을 선택하세요" << endl;
+						continue;
 					}
 					if (H_change == 2 && arr2[M_change - 1][N_change - 1] == 1) {
-					cout << "이미 예약되었습니다. 다른 좌석을 선택하세요" << endl;
-					continue;
+						cout << "이미 예약되었습니다. 다른 좌석을 선택하세요" << endl;
+						continue;
 					}
 					if (H_change == 3 && arr3[M_change - 1][N_change - 1] == 1) {
-					cout << "이미 예약되었습니다. 다른 좌석을 선택하세요" << endl;
-					continue;
+						cout << "이미 예약되었습니다. 다른 좌석을 선택하세요" << endl;
+						continue;
 					}
 
 					break;
 				}
-				
+
 				if (H == 1) {
 					if (arr1[M - 1][N - 1] == 0) {
 						cout << "현재 좌석이 틀렸습니다. 다시 입력해주세요." << endl;
-						cout << "현재 좌석( H구역, N열, M번째 ) : ";						
+						cout << "현재 좌석( H구역, N열, M번째 ) : ";
 						cin >> H >> N >> M;
 					}
 					if (arr1[M - 1][N - 1] == 1) {
@@ -389,7 +388,7 @@ int main() {
 				if (H == 2) {
 					if (arr2[M - 1][N - 1] == 0) {
 						cout << "현재 좌석이 틀렸습니다. 다시 입력해주세요." << endl;
-						cout << "현재 좌석( H구역, N열, M번째 ) : ";						
+						cout << "현재 좌석( H구역, N열, M번째 ) : ";
 						cin >> H >> N >> M;
 					}
 
@@ -506,7 +505,7 @@ int main() {
 
 			cin >> num;
 		}
-		else{
+		else {
 			cout << "총 " << total_money << "원   입니다." << endl;
 			break;
 		}
