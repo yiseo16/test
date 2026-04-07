@@ -1,0 +1,222 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+//계좌라는 구조체 생성
+//구조체란 여러 개의 변수를 하나로 묶어서 관리할 수 있는 사용자 정의 자료형
+struct Account {
+    string name;
+    int balance;
+};
+// 이름과 잔액을 한번에 처리할 수 있도록 구조체로 정의
+
+Account acc[100]; // 최대 100개의 계좌를 저장할 수 있는 배열
+int accCount = 0; // 현재 등록된 계좌 수 = 0
+
+// 계좌 찾기 함수
+int findAccount(string name) {
+    for (int i = 0; i < accCount; i++)  //0번부터 현재 등록된 계좌 수 만큼 반복 (accCount -1번째)
+    {
+        if (acc[i].name == name)
+            return i; // 이름과 일치하면 해당 위치 반환
+    }
+    return -1;
+}
+
+// (1) 계좌 리스트 출력 (Call by Value)
+void showAccounts(int count) //accCount를 매개변수로 받아서 현재 등록된 계좌 수를 전달
+{
+    cout << endl;
+    cout << "-------- [현재 등록된 계좌 리스트] --------" << endl;
+
+    if (count == 0) {
+        cout << "(등록된 계좌가 없습니다.)" << endl;
+		cout << "-------------------------------------------" << endl;
+        cout << endl;
+        cout << endl;
+
+		return; // void 함수에서 return은 함수 종료를 의미하므로, 계좌가 없을 때는 리스트 출력 없이 바로 종료
+    }
+
+	for (int i = 0; i < count; i++) //0번부터 현재 등록된 계좌 수 만큼 반복 (accCount -1번째)
+    { 
+        cout << "이름 : " << acc[i].name << "         | 잔액 : " << acc[i].balance << "원" << endl;
+		// 각 계좌의 이름과 잔액을 출력
+    }
+    cout << endl;
+    cout << "-------------------------------------------" << endl;
+    cout << endl;
+}
+
+// (2) 신규 계좌 등록 (Call by Reference)
+void createAccount(int& count) 
+//accCount를 참조로 받아서 신규 계좌 등록 시 계좌 수를 직접 수정
+// count는 accCount의 별칭
+{
+    cout << endl;
+    cout << "[신규 계좌 등록]" << endl;
+    cout << "등록할 이름: ";
+    cin >> acc[count].name;
+	// 값이 들어가니까 accCount = 0, acc[0].name에 입력한 이름이 저장
+
+    cout << "초기 잔액: ";
+    cin >> acc[count].balance;
+    // 값이 들어가니까 accCount = 0, acc[0].balance에 입력한 잔액이 저장
+
+    count++;
+	// 계좌 수 증가, 다음 계좌 등록 시 다음 위치에 저장할 수 있도록
+    cout << "신규 계좌 등록 완료했습니다." << endl;
+    cout << endl;
+    cout << endl;
+}
+
+// (3) 입금 (Call by Address)
+void deposit(int* balance) // 172줄에서 acc[idx].balance의 주소를 전달받아서 입금 처리
+{
+    int money;
+    cout << "거래 금액 입력 : ";
+    cin >> money;
+
+	*balance += money; // balance는 포인터이므로, *balance로 실제 잔액에 접근하여 입금 금액을 더함
+
+    cout << money << "원 입금 완료했습니다." << endl;
+    cout << endl;
+    cout << endl;
+}
+
+// (3) 출금 (Call by Address)
+void withdraw(int* balance) // 175줄에서 acc[idx].balance의 주소를 전달받아서 출금 처리
+{
+    int money;
+    cout << "거래 금액 입력 : ";
+    cin >> money;
+
+    if (*balance < money) // 계좌의 잔액이 출금 금액보다 적으면 출금 불가
+    {
+        cout << "잔액이 부족합니다." << endl;
+        cout << endl;
+        cout << endl;
+        return; // 함수 종료
+    }
+
+    *balance -= money; // 계좌의 잔액이 출금 금액보다 작지 않다면 출금가능
+
+    cout << money << "원 출금 완료했습니다." << endl;
+    cout << endl;
+    cout << endl;
+}
+
+// (4) 계좌 이체 (Call by Reference)
+void transfer(int& from, int& to) // 보내는 계좌의 잔액과 받는 계좌의 잔액을 참조로 받아서 이체 처리
+{
+    int money;
+    cout << "이체할 금액: ";
+    cin >> money;
+
+    if (from < money) {
+        cout << "잔액이 부족합니다." << endl;
+        cout << endl;
+        cout << endl;
+        return;
+    }
+
+    from -= money;
+    to += money;
+
+    cout << "이체가 완료되었습니다." << endl;
+    cout << endl;
+    cout << endl;
+}
+
+int main() {
+    int menu;
+
+    while (1) {
+        cout << "============ 은행 계좌 관리 시스템 ============" << endl;
+        cout << "1. 현재 등록된 계좌 리스트 보기" << endl;
+        cout << "2. 신규 계좌 등록" << endl;
+        cout << "3. 입금 및 출금" << endl;
+        cout << "4. 계좌 간 이체" << endl;
+        cout << "5. 프로그램 종료" << endl;
+        cout << "===============================================" << endl;
+        cout << ">> 메뉴 선택 : ";
+        cin >> menu;
+
+        if (menu == 1) {
+            showAccounts(accCount);
+        }
+        else if (menu == 2) {
+            createAccount(accCount);
+        }
+        else if (menu == 3) {
+            string name;
+            cout << endl;
+            cout << "조회할 이름을 입력하세요 : ";
+            cin >> name;
+
+			int idx = findAccount(name); // 입력한 이름과 일치하는 계좌의 인덱스 반환, 없으면 -1 반환하는 함수
+
+            if (idx == -1) {
+                cout << "존재하지 않는 사용자입니다." << endl;
+                cout << endl;
+                cout << endl;
+                continue;
+            }
+
+            cout << "현재 "<< name <<"님의 잔액: " << acc[idx].balance << "원" << endl;
+			//acc[idx].balance로 현재 잔액 출력
+
+            int choice;
+            cout << "(1) 입금 | (2) 출금 : ";
+            cin >> choice;
+
+            if (choice == 1) {
+                deposit(&acc[idx].balance); // 주소 전달
+            }
+            else if (choice == 2) {
+                withdraw(&acc[idx].balance); // 주소 전달
+            }
+            else {
+                cout << "올바른 번호를 입력하세요 (1 또는 2)." << endl;
+                cout << endl;
+                cout << endl;
+            }
+        }
+        else if (menu == 4) {
+            string fromName, toName;
+
+            cout << endl;
+			cout << "[계좌 간 이체]" << endl;
+            cout << "보내는 분 이름: ";
+            cin >> fromName;
+
+            cout << "받는 분 이름: ";
+            cin >> toName;
+
+			int fromIdx = findAccount(fromName); // 보내는 분 이름과 일치하는 계좌의 인덱스 반환, 없으면 -1 반환
+			int toIdx = findAccount(toName); // 받는 분 이름과 일치하는 계좌의 인덱스 반환, 없으면 -1 반환
+
+			if (fromIdx == -1 || toIdx == -1) // 보내는 분 또는 받는 분 중 하나라도 존재하지 않는 경우
+            {
+                cout << "존재하지 않는 사용자입니다." << endl;
+                cout << endl;
+                cout << endl;
+				continue; // 메뉴 선택으로 돌아감
+            }
+
+			transfer(acc[fromIdx].balance, acc[toIdx].balance); 
+            // 일치했을 경우 받은 계좌 인덱스의 잔액과 받은 계좌 인덱스의 잔액을 참조로 전달하여 이체 처리
+        }
+        else if (menu == 5) {
+            cout << "프로그램을 종료합니다." << endl;
+            break;
+        }
+        else {
+            cout << "올바른 번호를 입력해주세요." << endl;
+            cout << endl;
+            cout << endl;
+        }
+    }
+
+    return 0;
+}
