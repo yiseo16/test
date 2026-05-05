@@ -1,0 +1,107 @@
+#include <iostream>
+using namespace std;
+
+class CoffeeMachine {
+public:
+	int waterLevel;
+	int coffeeBeansLevel;
+
+	CoffeeMachine();
+	~CoffeeMachine();
+
+	void fillWater();
+	void fillCoffeeBeans();
+	void makeCoffee();
+
+};
+
+CoffeeMachine::~CoffeeMachine() {
+	cout << "커피 머신이 종료되었습니다." << endl;
+}
+
+CoffeeMachine::CoffeeMachine() {
+	waterLevel = 0;
+	coffeeBeansLevel = 0;
+}
+
+void CoffeeMachine::fillWater() {
+	waterLevel += 1000;
+	cout << endl;
+	cout << "물 보충을 완료했습니다. 현재 물 높이: " << waterLevel << endl;
+	cout << endl;
+}
+
+void CoffeeMachine::fillCoffeeBeans() {
+	coffeeBeansLevel += 100;
+	cout << endl;
+	cout << "커피 원두 보충을 완료했습니다. 현재 커피 원두 높이: " << coffeeBeansLevel << endl;
+	cout << endl;
+}
+
+void CoffeeMachine::makeCoffee() {
+	cout << endl;
+	cout << "커피를 내리는 중입니다..." << endl;
+	if (waterLevel >= 300 && coffeeBeansLevel >= 20) {
+		waterLevel -= 300;
+		coffeeBeansLevel -= 20;
+
+		cout << "커피가 완성되었습니다. 맛있게 드세요." << endl;
+		cout << "   ( (\n";
+		cout << "    ) )\n";
+		cout << "  ........\n";
+		cout << "  |      |]\n";
+		cout << "  \\      /\n";
+		cout << "   `----'\n";
+		cout << endl;
+	}
+	else if(waterLevel < 300) {
+		cout << "물 보충이 필요합니다." << endl;
+		cout << endl;
+	}
+	else if (coffeeBeansLevel < 20) {
+		cout << "커피 원두 보충이 필요합니다." << endl;
+		cout << endl;
+	}
+}
+
+void startMenu() {
+	cout << "=====커피 머신 메뉴=====" << endl;
+	cout << "1. 커피 내리기" << endl;
+	cout << "2. 물 보충하기" << endl;
+	cout << "3. 커피 원두 보충하기" << endl;
+	cout << "4. 종료하기" << endl;
+	cout << "메뉴를 선택하세요: ";
+}
+
+int main() {
+	cout << "커피 머신 기계를 작동합니다." << endl;
+	cout << "=====커피 머신 초기화중=====" << endl;
+	cout << "커피 머신이 준비되었습니다." << endl;
+
+	CoffeeMachine myCoffeeMachine;
+	cout << endl;
+
+	while (true) {
+		startMenu();
+		int answer;
+		cin >> answer;
+
+		if (answer == 1) {
+			myCoffeeMachine.makeCoffee();
+		}
+
+		if (answer == 2) {
+			myCoffeeMachine.fillWater();
+		}
+
+		if (answer == 3) {
+			myCoffeeMachine.fillCoffeeBeans();
+		}
+
+		if (answer == 4) {
+			break;
+		}
+		
+	}
+	return 0;
+}
