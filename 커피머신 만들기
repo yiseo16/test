@@ -2,10 +2,12 @@
 using namespace std;
 
 class CoffeeMachine {
-public:
+private:
 	int waterLevel;
 	int coffeeBeansLevel;
 
+public:
+	
 	CoffeeMachine();
 	~CoffeeMachine();
 
