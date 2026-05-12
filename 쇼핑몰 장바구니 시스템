@@ -168,6 +168,12 @@ int main() {
 			cart.showPayHistory();
 		}
 		else if (menu == 5) {
+			for (int i = 0; i < cart.items.size(); i++) {
+				delete cart.items[i];
+			}
+			for (int i = 0; i < cart.payHistory.size(); i++) {
+				delete cart.payHistory[i];
+			}
 			cout << endl;
 			cout << "프로그램을 종료합니다." << endl;
 			break;
