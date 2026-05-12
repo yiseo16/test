@@ -1,0 +1,183 @@
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+class Product { 
+public:
+	string name;
+	int price;
+	int quantity;
+
+	Product(string n, int p, int q);
+};
+Product::Product(string n, int p, int q) {
+	name = n;
+	price = p;
+	quantity = q;
+}
+
+class Cart { 
+public:
+	vector <Product*> items;
+	vector <Product*> payHistory;
+
+	void showCart();
+	void pay();
+	void showPayHistory();
+
+	int totalPrice();
+};
+
+Cart cart;
+
+void Cart::showCart() {
+	cout << endl;
+	cout << "-------- [장바구니 목록] -------- " << endl;
+	if (items.empty()) {
+		cout << "(장바구니에 담긴 상품이 없습니다.)" << endl;
+	}
+	else {
+		for (int i = 0; i < items.size();i++) {
+			cout << "- " << items[i]->name
+				<< "[" << items[i]->quantity << "] : "
+				<< items[i]->price * items[i]->quantity << "원"
+				<< "(단가: " << items[i]->price << "원)" << endl;
+		}
+	}
+	
+	cout << "--------------------------------" << endl;
+	cout << endl;
+};
+
+int Cart::totalPrice() {
+	int total = 0;
+	for (int i = 0; i < items.size();i++) {
+		total += items[i]->price * items[i]->quantity;
+	}
+
+	return total;
+}
+
+void Cart::pay() {
+	if (items.empty()) {
+		cout << endl;
+		cout << "장바구니에 담긴 상품이 없습니다." << endl;
+		cout << endl;
+	}
+	else {
+		cout << endl;
+		cout << "-------- [결제 내역] -------- " << endl;
+		for (int i = 0; i < items.size();i++) {
+			cout << "- " << items[i]->name
+				<< "[" << items[i]->quantity << "] : "
+				<< items[i]->price * items[i]->quantity << "원"
+				<< "(단가: " << items[i]->price << "원)" << endl;
+		}
+		cout << "-----------------------------" << endl;
+
+		cout << endl;
+
+		cout << "최종 결제 금액 : " << totalPrice() << "원" << endl;
+		cout << "결제하시겠습니까? (Y/N): ";
+
+		char answer;
+		cin >> answer;
+
+		if (answer == 'Y' || answer == 'y') {
+			for (int i = 0; i < items.size(); i++) {
+				payHistory.push_back(items[i]);
+			}
+			cout << endl;
+			cout << "결제가 완료되었습니다. 장바구니를 비웁니다." << endl;
+			items.clear();
+			cout << endl;
+		}
+		else if (answer == 'N' || answer == 'n') {
+			cout << endl;
+			cout << "결제가 취소되었습니다." << endl;
+			cout << endl;
+		}
+	}	
+}
+
+void Cart::showPayHistory() {
+	cout << endl;
+	cout << "-------- [주문 상세 내역] -------- " << endl;
+	if (payHistory.empty()) {
+		cout << "(결제 내역이 없습니다.)" << endl;
+	}
+	else {
+		for (int i = 0; i < payHistory.size();i++) {
+			cout << "- " << payHistory[i]->name
+				<< "[" << payHistory[i]->quantity << "] : "
+				<< payHistory[i]->price * payHistory[i]->quantity << "원"
+				<< "(단가: " << payHistory[i]->price << "원)" << endl;
+		}
+	}
+	cout << "----------------------------------" << endl;
+	cout << endl;
+};
+
+void startMenu() {
+	cout << "======== 쇼핑몰 장바구니 시스템 ========" << endl;
+	cout << "1. 장바구니 담기" << endl;
+	cout << "2. 장바구니 목록 보기" << endl;
+	cout << "3. 결제하기" << endl;
+	cout << "4. 전체 결제 내역 확인" << endl;
+	cout << "5. 프로그램 종료" << endl;
+	cout << ">> 메뉴 선택 : ";
+}
+
+int main() {
+	int menu;
+
+	while (true) {
+		startMenu();
+
+		cin >> menu;
+
+		if (menu == 1) {
+			string name;
+			int price;
+			int quantity;
+
+			cout << endl;
+			cout << "[장바구니 담기]" << endl;
+			cout << "상품명: ";
+			cin >> name;
+			cout << "가격: ";
+			cin >> price;
+			cout << "수량: ";
+			cin >> quantity;
+
+			Product* p = new Product(name, price, quantity);
+			cart.items.push_back(p);
+
+			cout << endl;
+			cout << "상품 추가 완료했습니다." << endl;
+			cout << endl;
+		}
+		else if (menu == 2) {
+			cart.showCart();
+		}
+		else if (menu == 3) {
+			cart.pay();
+		}
+		else if (menu == 4) {
+			cart.showPayHistory();
+		}
+		else if (menu == 5) {
+			cout << endl;
+			cout << "프로그램을 종료합니다." << endl;
+			break;
+		}
+		else {
+			cout << endl;
+			cout << "잘못된 번호입니다. 1 ~ 5 사이만 입력해주세요." << endl;
+			cout << endl;
+		}
+	}
+
+	return 0;
+}
