@@ -1,0 +1,51 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+template <typename S>
+class ShoppingList {
+public:
+	ShoppingList();
+	~ShoppingList();
+
+	void addFood(S food);
+	void show();
+
+private:
+	vector<S> myList;
+};
+
+template <typename S>
+ShoppingList<S>::ShoppingList() {
+	
+}
+
+template <typename S>
+ShoppingList<S>::~ShoppingList() {
+	
+}
+
+template <typename S>
+void ShoppingList<S>::addFood(S food) {
+	myList.push_back(food);
+}
+
+template <typename S>
+void ShoppingList<S>::show() {
+	cout << "Shopping List:" << endl;
+	for (int i = 0; i < myList.size(); i++) {
+		cout << "- " << myList[i] << endl;
+	}
+}
+
+int main(){
+	ShoppingList<string>* myList = new ShoppingList<string>;
+	myList->addFood("Bread");
+	myList->addFood("Milk");
+	myList->addFood("Eggs");
+	
+	myList->show();
+	
+	delete myList;
+	return 0;
+}
