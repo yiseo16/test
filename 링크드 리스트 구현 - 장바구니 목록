@@ -1,51 +1,83 @@
 #include <iostream>
-#include <vector>
+#include <string>
 using namespace std;
+
+
+template <typename S>
+class Node {
+public:
+    S data;
+    Node<S>* next;
+
+    Node(S value) {
+        data = value;
+        next = 0;
+    }
+};
 
 template <typename S>
 class ShoppingList {
 public:
-	ShoppingList();
-	~ShoppingList();
+    ShoppingList();
+    ~ShoppingList();
 
-	void addFood(S food);
-	void show();
+    void addFood(S food);
+    void show();
 
 private:
-	vector<S> myList;
+    Node<S>* head;
+    Node<S>* tail;
 };
 
 template <typename S>
 ShoppingList<S>::ShoppingList() {
-	
+    head = 0;
+    tail = 0;
 }
 
 template <typename S>
 ShoppingList<S>::~ShoppingList() {
-	
+
 }
 
 template <typename S>
 void ShoppingList<S>::addFood(S food) {
-	myList.push_back(food);
+
+    Node<S>* newNode = new Node<S>(food);
+
+    if (head == 0) {
+        head = newNode;
+        tail = newNode;
+    }else {
+        tail->next = newNode;
+        tail = newNode;
+    }
 }
 
 template <typename S>
 void ShoppingList<S>::show() {
-	cout << "Shopping List:" << endl;
-	for (int i = 0; i < myList.size(); i++) {
-		cout << "- " << myList[i] << endl;
-	}
+
+    Node<S>* current = head;
+
+    cout << "Shopping List:" << endl;
+
+    while (current != 0) {
+        cout << "- " << current->data << endl;
+        current = current->next;
+    }
 }
 
-int main(){
-	ShoppingList<string>* myList = new ShoppingList<string>;
-	myList->addFood("Bread");
-	myList->addFood("Milk");
-	myList->addFood("Eggs");
-	
-	myList->show();
-	
-	delete myList;
-	return 0;
+int main() {
+
+    ShoppingList<string>* myList = new ShoppingList<string>;
+
+    myList->addFood("Bread");
+    myList->addFood("Milk");
+    myList->addFood("Eggs");
+
+    myList->show();
+
+    delete myList;
+
+    return 0;
 }
