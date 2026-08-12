@@ -1,0 +1,11 @@
+# ⚠️ 이 파일은 4조가 통합 테스트를 위해 만든 더미입니다.
+# 1조는 실제 챌린지가 완성되면 이 파일을 자기 것으로 완전히 교체하세요.
+# (서비스명 sqli-app, 포트 8081, container_name 미사용, networks 미정의 — 통합 계약서 규칙만 지키면 됩니다)
+
+services:
+  sqli-app:
+    image: nginx:alpine
+    ports:
+      - "8081:80"
+    volumes:
+      - ./dummy:/usr/share/nginx/html:ro

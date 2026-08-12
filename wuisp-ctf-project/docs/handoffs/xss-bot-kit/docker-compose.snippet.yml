@@ -1,0 +1,23 @@
+# 이 내용을 2조가 만드는 challenges/xss/docker-compose.yml 에 그대로 반영하세요.
+# (xss-app은 2조가 직접 만드는 게시판, xss-bot은 아래 bot/ 폴더를 그대로 복사)
+#
+# ⚠️ 통합 계약서 규칙:
+#   - 최상위 networks를 별도로 정의하지 마세요 (기본 네트워크를 함께 씀)
+#   - container_name을 지정하지 마세요
+#   - 외부 포트는 xss-app만 8082로 열고, xss-bot은 내부 전용이라 ports 불필요
+
+services:
+  xss-app:
+    build: ./app          # 2조가 만드는 게시판 앱 (Dockerfile 포함)
+    ports:
+      - "8082:80"
+    environment:
+      BOT_URL: http://xss-bot:3000
+    depends_on:
+      - xss-bot
+
+  xss-bot:
+    build: ./bot           # 이 폴더(docs/handoffs/xss-bot-kit/bot)를 challenges/xss/bot 으로 복사해서 사용
+    environment:
+      FLAG: "WUISP{xss_stored_admin_cookie_stolen}"
+      TARGET_BASE: http://xss-app

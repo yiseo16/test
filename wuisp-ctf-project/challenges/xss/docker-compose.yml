@@ -1,0 +1,37 @@
+# ⚠️ 이 파일은 4조가 통합 테스트를 위해 만든 더미입니다.
+# 2조는 실제 챌린지가 완성되면 이 파일을 자기 것으로 완전히 교체하세요.
+# (docs/handoffs/xss-bot-kit/ 안의 봇 템플릿을 참고해서 xss-app + xss-bot 구성으로 만드시면 됩니다)
+# (서비스명 xss-app, 포트 8082, container_name 미사용, networks 미정의 — 통합 계약서 규칙만 지키면 됩니다)
+
+services:
+  xss-app:
+    build: ./app
+    ports:
+      - "8082:80"
+    volumes:
+      - ./app:/var/www/html
+    environment:
+      BOT_URL: http://xss-bot:3000
+      DB_HOST: xss-mysql
+      DB_NAME: ${XSS_DB_NAME}
+      DB_USER: ${XSS_DB_USER}
+      DB_PASSWORD: ${XSS_DB_PASSWORD}
+    depends_on:
+      - xss-bot
+      - xss-mysql
+
+  xss-bot:
+    build: ./bot
+    environment:
+      XSS_FLAG: ${XSS_FLAG}
+      TARGET_BASE: http://xss-app
+
+  xss-mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: ${XSS_DB_NAME}
+      MYSQL_USER: ${XSS_DB_USER}
+      MYSQL_PASSWORD: ${XSS_DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${XSS_DB_ROOT_PASSWORD}
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql

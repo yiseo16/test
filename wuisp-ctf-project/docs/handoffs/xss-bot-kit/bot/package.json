@@ -1,0 +1,9 @@
+{
+  "name": "xss-bot",
+  "version": "1.0.0",
+  "description": "관리자 확인 요청을 받으면 1회 실행되는 봇",
+  "dependencies": {
+    "express": "^4.18.2",
+    "puppeteer": "^21.0.0"
+  }
+}

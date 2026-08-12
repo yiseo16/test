@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>미니 웹해킹 CTF</title>
+  <style>
+    body { font-family: sans-serif; max-width: 720px; margin: 40px auto; padding: 0 16px; }
+    h1 { margin-bottom: 4px; }
+    .sub { color: #666; margin-top: 0; }
+    .flash { background: #fff3cd; border: 1px solid #ffe69c; padding: 8px 12px; border-radius: 6px; margin-bottom: 16px; }
+    .card { border: 1px solid #ddd; border-radius: 8px; padding: 16px; margin-bottom: 12px; }
+    .card.solved { background: #f0fdf4; border-color: #86efac; }
+    .badge { display: inline-block; background: #22c55e; color: white; font-size: 12px; padding: 2px 8px; border-radius: 999px; margin-left: 8px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+    th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid #eee; }
+    input[type=text] { padding: 6px 8px; margin-right: 6px; }
+    button { padding: 6px 12px; cursor: pointer; }
+    .whoami { color: #666; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <h1>🚩 미니 웹해킹 CTF</h1>
+  <p class="sub">문제당 {{ points }}점, 총 {{ total_points }}점</p>
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for m in messages %}
+        <div class="flash">{{ m }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  {% if not nickname %}
+    <div class="card">
+      <p>참가하려면 먼저 닉네임을 등록하세요. (닉네임은 중복 사용 불가)</p>
+      <form action="{{ url_for('register') }}" method="post">
+        <input type="text" name="nickname" placeholder="닉네임" required>
+        <button type="submit">등록</button>
+      </form>
+    </div>
+  {% else %}
+    <p class="whoami">참가자: <strong>{{ nickname }}</strong></p>
+  {% endif %}
+
+  <h2>문제 목록</h2>
+  {% for cid, c in challenges.items() %}
+    <div class="card {{ 'solved' if cid in solved else '' }}">
+      <strong>{{ c.name }}</strong>
+      {% if cid in solved %}<span class="badge">완료</span>{% endif %}
+      <p><a href="{{ c.url }}" target="_blank">{{ c.url }}</a></p>
+      {% if nickname and cid not in solved %}
+        <form action="{{ url_for('submit') }}" method="post">
+          <input type="hidden" name="challenge_id" value="{{ cid }}">
+          <input type="text" name="flag" placeholder="WUISP{...}" required>
+          <button type="submit">제출</button>
+        </form>
+      {% endif %}
+    </div>
+  {% endfor %}
+
+  <h2>리더보드</h2>
+  <table>
+    <tr><th>순위</th><th>닉네임</th><th>점수</th><th>맞힌 문제 수</th></tr>
+    {% for row in leaderboard %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ row.nickname }}</td>
+        <td>{{ row.score }}</td>
+        <td>{{ row.solved_count }}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="4">아직 아무도 문제를 풀지 않았습니다.</td></tr>
+    {% endfor %}
+  </table>
+</body>
+</html>

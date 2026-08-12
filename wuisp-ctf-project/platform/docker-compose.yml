@@ -1,0 +1,17 @@
+services:
+  platform:
+    build: .
+    ports:
+      - "8080:80"
+    environment:
+      SECRET_KEY: ${SECRET_KEY:-change-me-please}
+      FLAG_SQLI: ${FLAG_SQLI:-WUISP{change_me_sqli}}
+      FLAG_XSS: ${FLAG_XSS:-WUISP{change_me_xss}}
+      FLAG_UPLOAD: ${FLAG_UPLOAD:-WUISP{change_me_upload}}
+      PUBLIC_HOST: ${PUBLIC_HOST:-localhost}
+      DB_PATH: /data/ctf.db
+    volumes:
+      - platform_data:/data
+
+volumes:
+  platform_data:
